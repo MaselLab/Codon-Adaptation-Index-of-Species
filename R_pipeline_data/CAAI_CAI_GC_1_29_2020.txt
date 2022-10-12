@@ -1,4 +1,4 @@
-Row,SpeciesUID,NewickName,Speciesname,kingdom,Genic_GC,Genomic_Percent_GC,CAI,CAAI,wi_CAAI,fi_CAAI
+Row,SpeciesUID,NewickName,Speciesname,kingdom,Genic_GC,Genomic_total_Percent_GC,CAI,CAIS,wi_CAIS,AA_weighted_CAIS
 1,4,Anas_platyrhynchos,AnasPlatyrhynchos,vertebrate,0.4929,0.410589993,0.826258242,1.06115244156788,0.336375701642955,1.06172154287619
 2,5,Anolis_carolinensis,AnolisCarolinensis,vertebrate,0.4842,0.398464667,0.853091896,1.04814802880784,0.333129570244789,1.04912014702403
 3,9,Callithrix_jacchus,CallithrixJacchus,vertebrate,0.5129,0.40666913,0.806796968,1.07325514045089,0.335782499736215,1.07321292222748
