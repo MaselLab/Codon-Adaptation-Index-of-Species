@@ -1,7 +1,5 @@
-# -*- coding: utf-8 -*-
 """
 Created on Wed Jul 22 15:45:15 2020
-
 @author: Catarina
 """
 
@@ -31,7 +29,7 @@ def ratio(popsize,s):
     delfix = (1-np.exp(0.5*s))*((1-np.exp(popsize*s))**-1)
     
     #ratio of fixation of deleterious/nondeleterious mutations
-    R = delfix*(probfix**-1)
+    R = delfix*((probfix+delfix)**-1 )
   
     return R
 
@@ -103,18 +101,12 @@ plt.ylabel('Ratio of fixation \n of deleterious vs beneficial mutations')
 plt.show()
 
 
-plt.plot(popsize*s1, ratio(popsize, s1), 'r--',label = 's = 0.01')
-plt.plot(popsize*s2, ratio(popsize, s2), 'k--',label = 's = 0.012')
-plt.plot(popsize*s3, ratio(popsize, s3), 'y--',label = 's = 0.013')
-plt.plot(popsize*s4, ratio(popsize, s4), 'g--',label = 's = 0.014')
-plt.plot(popsize*s5, ratio(popsize, s5), 'c--',label = 's = 0.015')
-plt.plot(popsize*s6, ratio(popsize, s6), 'b--',label = 's = 0.016')
-plt.plot(popsize*s7, ratio(popsize, s7), 'm--',label = 's = 0.017')
-plt.plot(popsize*s8, ratio(popsize, s8), 'r-',label = 's = 0.018')
-plt.legend(loc="upper right")
-plt.title('Ratio of Fixation as function of Population size')
-plt.xlabel('sN')
-plt.ylabel('Ratio of fixation \n of deleterious vs beneficial mutations')
+plt.plot(popsize*s1, ratio(popsize, s1), 'k', linewidth=2)
+#plt.legend(loc="upper right")
+#plt.title('')
+plt.xlabel('sN',size=16)
+plt.grid(color='lightgrey', linestyle='-', linewidth=1)
+plt.ylabel('Fraction of time \n non-preferred allele is fixed', size=16)
 plt.show()
 
 plt.plot(popsize*0.001, ratio(_popsize, 0.001), 'r--',label = 's = 0.001')
