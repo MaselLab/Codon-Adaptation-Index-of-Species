@@ -9,10 +9,10 @@ Date Updated: 10/12/2022
 Script to calculate local GC CAIS values for a species
 Takes the grand geometric mean of RSCUS values for each codon across all local GC windows
 Uses exponential of an arithmetic mean for computational efficiency
-Uses the output file from intergenic_RSCUS.py
+Uses the output file from local_GC_RSCUS.py
 Prints the final CAIS value
 
-Use: python CAIS_intergenic.py [output_from_intergenic_RSCUS.csv]
+Use: python CAIS_intergenic.py [output_from_local_GC_RSCUS.csv]
 
 '''
 maxInt = sys.maxsize
