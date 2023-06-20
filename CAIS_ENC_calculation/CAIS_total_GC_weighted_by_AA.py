@@ -8,9 +8,9 @@ Created on Fri Jan 10 19:15:16 2020
 import os, sys, json, csv, mysql.connector,datetime,math
 
 """
-The purpose of this file is to determine the codon actually adaptation indices (CAAI) for individual species.CAAI is Codon Adaptation Index (1987 version) contolled for Amino Acid composition and potential mutation bias within codon usuage.
+The purpose of this file is to determine the codon adaptation index of species (CAIS) for individual species. CAAI is Codon Adaptation Index (1987 version) contolled for Amino Acid composition and potential mutation bias within codon usuage.
 This is a metric that describes codon usage patterns. 
-CAAI is calculated in the following way:
+CAIS is calculated in the following way:
     
     I)
   
@@ -37,7 +37,10 @@ CAAI is calculated in the following way:
         
     II) Calculate the Amino Acid controlled codon frequency
         
-        7)                                                   
+    III) Calculate unweighted CAI (CAAI)
+
+    IV) Calculate amino acid frequency controlled CAIS (Weighted_fi_CAAI)
+   
         
 """
 
@@ -528,6 +531,7 @@ for CodingTable in CodingTables:
                     # the RSCU_i value to one for all codons corresponding to that amino acid. We do this because later we'll
                     # take the geometric mean of all relative adaptedness values and multiplying by one will not affect this value
                     # In essence, setting them to one "silences" these.
+                        
                         if Sum[AA] != 0:
                             if Codon in ['TTA','TAT','ATT','AAT','ATA','TAA','AAA','TTT']:
                                 Prob = (notGC_total_prob*notGC_total_prob*notGC_total_prob)*0.125
@@ -622,7 +626,7 @@ for CodingTable in CodingTables:
                 print(RelativeAdaptednessTable)           
                 sys.stdout.flush()
 
-            #CAI
+            #CAAI
             LogOfCAAI = 0
             for AA in RawCount:
                 for Codon in RawCount[AA]:
@@ -636,7 +640,7 @@ for CodingTable in CodingTables:
             CAAI = math.exp(LogOfCAAI)            
             
 
-            #Weighted wi CAI
+            #Weighted wi CAAI
             Weighted_wi_Log_ofCAAI = 0
             for AA in RawCount:
                 for Codon in RawCount[AA]:
@@ -659,7 +663,7 @@ for CodingTable in CodingTables:
                         print(Weighted_wi_Log_ofCAAI)
                         sys.stdout.flush()
   
-            # and we invert the log to get the CAI
+            # and we invert the log to get the CAAI
             Weighted_wi_CAAI = math.exp(Weighted_wi_Log_ofCAAI)
             if Verbose == True:
                     print(Weighted_wi_Log_ofCAAI)
@@ -668,7 +672,7 @@ for CodingTable in CodingTables:
 
 
 
-           #Weighted codon frequency CAI
+           #Weighted codon frequency CAIS
             Weighted_fi_Log_ofCAAI = 0
             for AA in RawCount:
                 for Codon in RawCount[AA]:
@@ -691,14 +695,16 @@ for CodingTable in CodingTables:
                         print(Weighted_fi_Log_ofCAAI)
                         sys.stdout.flush()
   
-            # and we invert the log to get the CAI
+            # and we invert the log to get the CAIS
             Weighted_fi_CAAI = math.exp(Weighted_fi_Log_ofCAAI)
             if Verbose == True:
                     print(Weighted_fi_Log_ofCAAI)
                     sys.stdout.flush()
 
+            #Weighted_fi_CAAI is the amino acid frequency weighted, Total GC content weighted CAIS
+            print("%s,%s,%s"%(i,CAAI,Weighted_fi_CAAI))
             #print("%s,%s,%s,%s"%(i,CAAI,Weighted_wi_CAAI,Weighted_fi_CAAI))
-            print("%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s"%(i,Weighted_fi_CAAI,Codon_Summed_freqTable['F'],Codon_Summed_freqTable['L'],Codon_Summed_freqTable['S'],Codon_Summed_freqTable['Y'],Codon_Summed_freqTable['*'],Codon_Summed_freqTable['C'],Codon_Summed_freqTable['W'],Codon_Summed_freqTable['P'],Codon_Summed_freqTable['H'],Codon_Summed_freqTable['Q'],Codon_Summed_freqTable['R'],Codon_Summed_freqTable['I'],Codon_Summed_freqTable['M'],Codon_Summed_freqTable['T'],Codon_Summed_freqTable['N'],Codon_Summed_freqTable['K'],Codon_Summed_freqTable['V'],Codon_Summed_freqTable['A'],Codon_Summed_freqTable['D'],Codon_Summed_freqTable['E'],Codon_Summed_freqTable['G']))
+            #print("%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s"%(i,Weighted_fi_CAAI,Codon_Summed_freqTable['F'],Codon_Summed_freqTable['L'],Codon_Summed_freqTable['S'],Codon_Summed_freqTable['Y'],Codon_Summed_freqTable['*'],Codon_Summed_freqTable['C'],Codon_Summed_freqTable['W'],Codon_Summed_freqTable['P'],Codon_Summed_freqTable['H'],Codon_Summed_freqTable['Q'],Codon_Summed_freqTable['R'],Codon_Summed_freqTable['I'],Codon_Summed_freqTable['M'],Codon_Summed_freqTable['T'],Codon_Summed_freqTable['N'],Codon_Summed_freqTable['K'],Codon_Summed_freqTable['V'],Codon_Summed_freqTable['A'],Codon_Summed_freqTable['D'],Codon_Summed_freqTable['E'],Codon_Summed_freqTable['G']))
 
 cnx.close()
 
