@@ -44,7 +44,7 @@ str(dfGC)
 df<-merge(dfvert, dfGC, by.x="SpeciesName", by.y="NewickName")
 str(df)
 
-######################RAW#############
+######################RAW############
 
 hist(df$Estimate)
 
