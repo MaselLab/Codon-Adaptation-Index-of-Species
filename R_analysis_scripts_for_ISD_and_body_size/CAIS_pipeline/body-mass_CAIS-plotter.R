@@ -78,7 +78,7 @@ cor.test(dfmass$CAIS_intergenic,dfmass$gene_GC_variance, method = 'spearman')
 
 plot(x=dfmass$CAIS_intergenic,y=dfmass$gene_GC_variance)
 
-##################PIC################
+##################PIC###############
 
 #######read in data (ISD, clustering, etc)
 
